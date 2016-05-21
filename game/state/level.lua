@@ -39,9 +39,25 @@ function Level:load()
     end
 end
 
+function Level:pulse()
+    -- need to show the pulse. Don't reset the value until the pulse has been drawn.
+    -- get player position
+    -- tell each fan in certain radius of player to step back from player
+    if self.player.pulse then
+        for _, fan in ipairs(self.fans) do
+            if fan:isWithinDistanceFromPlayer(self.player.pulseRadius) then
+                fan:beingPulsed()
+            end
+        end
+        self.player.pulse = false
+
+    end
+end
+
 function Level:update(dt)
     self.map:update(dt)
     self.player:update(dt)
+    self:pulse()
     for _, fan in ipairs(self.fans) do
         fan:update(dt)
     end

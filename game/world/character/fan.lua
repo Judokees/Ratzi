@@ -15,6 +15,8 @@ function Fan.create(world, player)
     self.minSpeed = 10
     self.radius = 800
     self.path = "media/Ronny_"
+    self.pulseSpeed = 500
+    self.pulsed = false
     return self
 end
 
@@ -23,7 +25,14 @@ function Fan:load()
 end
 
 function Fan:update(dt)
-    self.vx, self.vy = self:_calculateVelocity()
+    if self.pulsed then
+        self.vx, self.vy = self:beingPulsed()
+        self.vx = -self.vx
+        self.vy = -self.vy
+        self.pulsed = false
+    else
+        self.vx, self.vy = self:_calculateVelocity()
+    end
     self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
     Character.update(self, dt)
 end
@@ -34,6 +43,16 @@ function Fan:draw()
         love.graphics.print("vx " .. math.floor(self.vx) .. " vy " .. math.floor(self.vy), self.x, self.y)
         love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
     end
+end
+
+function Fan:beingPulsed()
+    self.pulsed = true
+    local x, y = self:_getXYFromSpeedAndRatio(self.pulseSpeed, self:_getXYRatio())
+    return x, y
+end
+
+function Fan:isWithinDistanceFromPlayer(distance)
+    return self:_distanceSquaredFromPlayer() <= distance * distance
 end
 
 ------------------ MATHS ----------------------

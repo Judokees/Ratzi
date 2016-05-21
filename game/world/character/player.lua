@@ -4,6 +4,7 @@ local RIGHT_KEY = 'd'
 local LEFT_KEY = 'a'
 local UP_KEY = 'w'
 local DOWN_KEY = 's'
+local SPACE_KEY = 'space'
 
 local Player = {}
 Player.__index = Player
@@ -14,6 +15,9 @@ function Player.create(world)
     local self = Character.create(world, 0, 0)
     setmetatable(self, Player)
     self.path = "media/Ronny_"
+    self.reputation = 1
+    self.pulse = false
+    self.pulseRadius = 100
     return self
 end
 
@@ -48,6 +52,10 @@ function Player:update(dt)
         end
     else
         self:stopUpDown()
+    end
+
+    if love.keyboard.isDown(SPACE_KEY) and not self.pulse then
+        self.pulse = true
     end
 
     self.vx = math.min(400, math.max(self.vx, -400))
