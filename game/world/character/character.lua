@@ -1,6 +1,8 @@
 local Util = require 'util'
 local Character = {}
 
+local COLLISION_OFFSET = 4
+
 Character.__index = Character
 
 function Character.create(world, x, y)
@@ -25,10 +27,15 @@ function Character.create(world, x, y)
     return self
 end
 
+function Character:setPosition (x, y)
+    self.x = x
+    self.y = y
+end
+
 function Character:load()
     self.images = self:loadImages()
     self.width, self.height = self.images[self.frame]:getDimensions()
-    self.world:add(self, self.x, self.y, self.width, self.height)
+    self.world:add(self, self.x + COLLISION_OFFSET, self.y + COLLISION_OFFSET, self.width - COLLISION_OFFSET * 2, self.height - COLLISION_OFFSET * 2)
 end
 
 function Character:loadImages()
@@ -70,13 +77,13 @@ end
 
 function Character:draw()
     if Util:isDebug() then
-        love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+        love.graphics.rectangle('line', self.world:getRect(self))
     end
     local image = self:getImageFromFrame()
     local xOffset = self.width / 2
     local yOffset = self.height / 2
-    local x = self.x + xOffset
-    local y = self.y + yOffset
+    local x = self.x + xOffset - COLLISION_OFFSET
+    local y = self.y + yOffset - COLLISION_OFFSET
 
     love.graphics.draw(image, x, y, self.angle, 1, 1, xOffset, yOffset)
 end

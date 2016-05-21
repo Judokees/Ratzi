@@ -22,15 +22,17 @@ end
 function Map:load(path)
     self.map = STI.new(path, { "bump" })
     self.map:bump_init(self.world)
-    for i, layer in ipairs(self.map.layers) do
-        if layer.type == 'objectgroup' then
+    local toRemove = {}
+    for i, layer in pairs(self.map.layers) do
+        -- select the `objects` layer
+        if layer.properties and layer.properties.id == 'objects' then
             for _, object in ipairs(layer.objects) do
-                if object.type == 'spawn' then
+                if object.properties and object.properties.type == 'spawn' then
                     self.spawn = { x = object.x, y = object.y }
                 end
             end
         end
-        if layer.type == 'objectgroup' then
+        if layer.properties and (layer.properties.id == 'objects' or layer.properties.collidable == 'true') then
             self.map:removeLayer(i)
         end
     end
