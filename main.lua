@@ -5,7 +5,7 @@ local Level = require 'game.state.level'
 function love.load(args)
     love.handlers.nextstate = function (a, b, c, d)
         if StateManager:getStateId() == 'splash' then
-            local level = Level.create()
+            local level = Level.create('whatever-i-want')
             StateManager:add('level', level)
             StateManager:show('level')
             StateManager:load(args)
@@ -23,6 +23,9 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
+    if key == "escape" then
+        love.event.quit();
+    end
     StateManager:keypressed(key)
 end
 

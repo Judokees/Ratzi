@@ -2,7 +2,7 @@ local Character = {}
 
 Character.__index = Character
 
-function Character.create()
+function Character.create(world)
     local self = setmetatable({}, Character)
     self.x = 0
     self.y = 0
@@ -10,6 +10,10 @@ function Character.create()
     self.vy = 0
     self.accel = 20
     self.decel = 23
+    self.world = world
+    self.width = 10
+    self.height = 10
+    self.world:add(self, self.x, self.y, self.width, self.height)
     return self
 end
 
@@ -52,6 +56,13 @@ function Character:stopUpDown()
     elseif self.vy > 0 then
         self.vy = math.max(0, self.vy - self.decel)
     end
+end
+
+function Character:move(x, y)
+    local ax, ay, cols, len = self.world:check(self, x, y)
+
+    self.x = ax
+    self.y = ay
 end
 
 return Character
