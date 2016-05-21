@@ -11,7 +11,7 @@ Player.__index = Player
 setmetatable(Player, { __index = Character })
 
 function Player.create(world)
-    local self = Character.create(world)
+    local self = Character.create(world, 0 , 0)
     setmetatable(self, Player)
     return self
 end
@@ -57,6 +57,7 @@ end
 
 function Player:draw()
     love.graphics.print('vx: ' .. self.vx .. ', vy: ' .. self.vy, 5, 5)
+    love.graphics.print('x: ' .. self.x .. ', y: ' .. self.y, 5, 15)
     love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
     love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
 end

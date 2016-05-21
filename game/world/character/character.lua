@@ -2,10 +2,10 @@ local Character = {}
 
 Character.__index = Character
 
-function Character.create(world)
+function Character.create(world, x, y)
     local self = setmetatable({}, Character)
-    self.x = 0
-    self.y = 0
+    self.x = x
+    self.y = y
     self.vx = 0
     self.vy = 0
     self.accel = 20
