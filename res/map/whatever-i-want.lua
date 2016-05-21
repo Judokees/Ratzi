@@ -8,7 +8,7 @@ return {
   height = 1,
   tilewidth = 500,
   tileheight = 500,
-  nextobjectid = 8,
+  nextobjectid = 9,
   properties = {},
   tilesets = {
     {
@@ -56,7 +56,9 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
-      properties = {},
+      properties = {
+        ["collidable"] = "true"
+      },
       objects = {
         {
           id = 1,

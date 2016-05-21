@@ -2,14 +2,18 @@ local Character = {}
 
 Character.__index = Character
 
-function Character.create()
+function Character.create(world)
     local self = setmetatable({}, Character)
     self.x = 0
     self.y = 0
     self.vx = 0
     self.vy = 0
     self.accel = 20
-    self.decel = 100
+    self.decel = 23
+    self.world = world
+    self.width = 10
+    self.height = 10
+    self.world:add(self, self.x, self.y, self.width, self.height)
     return self
 end
 
@@ -76,6 +80,13 @@ end
 
 function Character:isMovingRight()
     return self.vx > 0
+end
+
+function Character:move(x, y)
+    local ax, ay, cols, len = self.world:check(self, x, y)
+
+    self.x = ax
+    self.y = ay
 end
 
 return Character
