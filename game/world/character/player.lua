@@ -56,10 +56,10 @@ function Player:update(dt)
 end
 
 function Player:draw()
+    Character.draw(self)
     love.graphics.print('vx: ' .. self.vx .. ', vy: ' .. self.vy, 5, 5)
     love.graphics.print('x: ' .. self.x .. ', y: ' .. self.y, 5, 15)
     love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
-    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
 end
 
 return Player
