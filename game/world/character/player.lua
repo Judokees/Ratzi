@@ -13,8 +13,6 @@ setmetatable(Player, { __index = Character })
 function Player.create()
     local self = Character.create()
     setmetatable(self, Player)
-    self.accel = 20
-    self.decel = 30
     return self
 end
 
@@ -24,26 +22,18 @@ end
 
 function Player:update(dt)
     if love.keyboard.isDown(RIGHT_KEY) then
-        self.vx = self.vx + self.accel
+        self:moveRight()
     elseif love.keyboard.isDown(LEFT_KEY) then
-        self.vx = self.vx - self.accel
+        self:moveLeft()
     else
-        if self.vx < 0 then
-            self.vx = math.max(0, self.vx + self.decel)
-        elseif self.vx > 0 then
-            self.vx = math.min(0, self.vx - self.decel)
-        end
+        self:stopLeftRight()
     end
     if love.keyboard.isDown(DOWN_KEY) then
-        self.vy = self.vy + self.accel
+        self:moveDown()
     elseif love.keyboard.isDown(UP_KEY) then
-        self.vy = self.vy - self.accel
+        self:moveUp()
     else
-        if self.vy < 0 then
-            self.vy = math.max(0, self.vy + self.decel)
-        elseif self.vy > 0 then
-            self.vy = math.min(0, self.vy - self.decel)
-        end
+        self:stopUpDown()
     end
 
     math.min(400, math.max(self.vx, -400))
