@@ -2,6 +2,7 @@ local bump = require 'libs.bump.bump'
 local GameState = require 'game.state.game_state'
 local Player = require 'game.world.character.player'
 local Map = require 'game.world.map'
+local Camera = require 'game.camera'
 
 local windowWidth, windowHeight = love.graphics.getDimensions()
 
@@ -28,11 +29,14 @@ end
 function Level:update(dt)
     self.map:update(dt)
     self.player:update(dt)
+    Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
 end
 
 function Level:draw()
-    self.map:draw()
+    Camera:set()
+    self.map:draw(Camera.x, Camera.y, windowWidth, windowHeight)
     self.player:draw()
+    Camera:unset()
 end
 
 return Level

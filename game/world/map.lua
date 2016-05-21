@@ -33,5 +33,15 @@ function Map:draw()
     self.map:bump_draw(self.world)
 end
 
+function Map:getBounds()
+    local firstLayer = self.map
+    return {
+        x = 0,
+        y = 0,
+        width = self.map.width * self.map.tilewidth,
+        height = self.map.height * self.map.tileheight
+    }
+end
+
 
 return Map
