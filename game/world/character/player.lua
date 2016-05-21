@@ -11,8 +11,8 @@ Player.__index = Player
 
 setmetatable(Player, { __index = Character })
 
-function Player.create(world)
-    local self = Character.create(world, 0, 0)
+function Player.create(world, x, y)
+    local self = Character.create(world, x, y)
     setmetatable(self, Player)
     self.path = "media/Ronny_"
     self.reputation = 1
@@ -80,11 +80,9 @@ function Player:solveCollision(x, y, ax, ay, cols, len)
     for _, col in ipairs(cols) do
         if col.other.type == 'fan' and col.type == 'slide' then
             if col.normal.y ~= 0 then
-                print 'y'
                 col.other.vy = self.vy * 0.5
             end
             if col.normal.x ~= 0 then
-                print 'x'
                 col.other.vx = self.vx * 0.5
             end
         end

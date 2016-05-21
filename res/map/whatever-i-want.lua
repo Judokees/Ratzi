@@ -8,7 +8,7 @@ return {
   height = 102,
   tilewidth = 35,
   tileheight = 35,
-  nextobjectid = 2,
+  nextobjectid = 6,
   properties = {},
   tilesets = {
     {
@@ -181,14 +181,14 @@ return {
       },
       objects = {
         {
-          id = 1,
-          name = "",
+          id = 5,
+          name = "Spawn Point",
           type = "",
           shape = "rectangle",
-          x = 2958.92,
-          y = 1285.1,
-          width = 13.8332,
-          height = 12.4499,
+          x = 2953.52,
+          y = 1304.22,
+          width = 14.0398,
+          height = 12.5619,
           rotation = 0,
           visible = true,
           properties = {

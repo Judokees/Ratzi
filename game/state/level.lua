@@ -18,7 +18,6 @@ function Level.create(id)
     local self = GameState.create()
     setmetatable(self, Level)
     self.world = bump.newWorld()
-    self.player = Player.create(self.world)
     self.fans = {}
     self.map = Map.create(self.world)
     self.id = id
@@ -27,15 +26,15 @@ end
 
 function Level:load()
     self.map:load('res/map/' .. self.id .. '.lua')
-    self.player:load(self.world)
     local spawn = self.map:getSpawn()
-    --self.player:move(spawn.x, spawn.y)
+    self.player = Player.create(self.world, spawn.x, spawn.y)
+    self.player:load()
     local bounds = self.map:getBounds()
     for i=1,300 do
         local npcNumber = math.floor(math.random(14))
-        local fan = Fan.create(self.world, self.player, npcNumber)
+        local fanPos = { x = math.floor(love.math.random() * bounds.width), y = math.floor(love.math.random() * bounds.height)}
+        local fan = Fan.create(self.world, self.player, fanPos.x, fanPos.y, npcNumber)
         fan:load()
-        fan:move(math.floor(love.math.random() * (bounds.width - fan.width)), math.floor(love.math.random() * (bounds.height - fan.height)))
         table.insert(self.fans, fan)
     end
 end
