@@ -1,9 +1,11 @@
 local StateManager = require 'game.state.state_manager'
+local FontManager = require 'game.font_manager'
 local Splash = require 'game.state.splash'
 local Level = require 'game.state.level'
 local Util = require 'util'
 
 function love.load(args)
+    FontManager:load()
     love.handlers.nextstate = function (a, b, c, d)
         if StateManager:getStateId() == 'splash' then
             local level = Level.create('whatever-i-want')
