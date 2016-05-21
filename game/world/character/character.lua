@@ -62,6 +62,30 @@ function Character:stopUpDown()
     end
 end
 
+function Character:isMovingUpOrDown()
+    return self.vy ~= 0
+end
+
+function Character:isMovingLeftOrRight()
+    return self.vx ~= 0
+end
+
+function Character:isMovingUp()
+    return self.vy < 0
+end
+
+function Character:isMovingDown()
+    return self.vy > 0
+end
+
+function Character:isMovingLeft()
+    return self.vx < 0
+end
+
+function Character:isMovingRight()
+    return self.vx > 0
+end
+
 function Character:move(x, y)
     local ax, ay, cols, len = self.world:check(self, x, y)
 
