@@ -15,6 +15,10 @@ function Map.create(world)
     return self
 end
 
+function Map:getSpawn()
+    return self.spawn
+end
+
 function Map:load(path)
     self.map = STI.new(path, { "bump" })
     self.map:bump_init(self.world)

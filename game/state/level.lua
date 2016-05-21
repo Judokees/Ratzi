@@ -28,6 +28,8 @@ end
 function Level:load()
     self.map:load('res/map/' .. self.id .. '.lua')
     self.player:load(self.world)
+    local spawn = self.map:getSpawn()
+    --self.player:move(spawn.x, spawn.y)
     local bounds = self.map:getBounds()
     for i=1,100 do
         local fan = Fan.create(self.world, self.player)
