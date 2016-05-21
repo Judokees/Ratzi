@@ -11,8 +11,9 @@ function Fan.create(world, player)
     setmetatable(self, Fan)
     self.type = 'fan'
     self.player = player
-    self.maxSpeed = 150
-    self.radius = 120
+    self.maxSpeed = 300
+    self.minSpeed = 10
+    self.radius = 800
     self.path = "media/Ronny_"
     return self
 end
@@ -42,7 +43,8 @@ function Fan:_calculateSpeed()
     -- This is the function we should change to make the fan behave differently.
     local distanceSquared = self:_distanceSquaredFromPlayer()
     if distanceSquared < self.radius * self.radius then
-        return self.maxSpeed
+        local gradient = (self.minSpeed - self.maxSpeed) / self.radius
+        return self.maxSpeed + gradient * math.sqrt(distanceSquared)
     end
     return 0
 end
