@@ -10,8 +10,8 @@ Player.__index = Player
 
 setmetatable(Player, { __index = Character })
 
-function Player.create()
-    local self = Character.create()
+function Player.create(world)
+    local self = Character.create(world, 0, 0)
     setmetatable(self, Player)
     return self
 end
@@ -23,29 +23,49 @@ end
 function Player:update(dt)
     if love.keyboard.isDown(RIGHT_KEY) then
         self:moveRight()
+        if self:isMovingLeft() then
+            self:stopLeftRight()
+        end
     elseif love.keyboard.isDown(LEFT_KEY) then
         self:moveLeft()
+        if self:isMovingRight() then
+            self:stopLeftRight()
+        end
     else
         self:stopLeftRight()
     end
+
     if love.keyboard.isDown(DOWN_KEY) then
         self:moveDown()
+        if self:isMovingUp() then
+            self:stopUpDown()
+        end
     elseif love.keyboard.isDown(UP_KEY) then
         self:moveUp()
+        if self:isMovingDown() then
+            self:stopUpDown()
+        end
     else
         self:stopUpDown()
     end
 
-    math.min(400, math.max(self.vx, -400))
-    math.min(400, math.max(self.vy, -400))
+    self.vx = math.min(400, math.max(self.vx, -400))
+    self.vy = math.min(400, math.max(self.vy, -400))
 
-    self.x = self.x + (self.vx * dt)
-    self.y = self.y + (self.vy * dt)
+    self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
 end
 
 function Player:draw()
-    love.graphics.print('vx: ' .. self.vx .. ', vy: ' .. self.vy, 10, 10)
-    love.graphics.circle('fill', self.x, self.y, 10)
+    Character.draw(self)
+    love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
+end
+
+function Player:getDebug()
+    return {
+        "Player:",
+        "x " .. math.floor(self.x) .. " y ".. math.floor(self.y),
+        "vx " .. math.floor(self.vx) .. " vyr " .. math.floor(self.vy)
+    }
 end
 
 return Player

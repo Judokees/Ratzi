@@ -1,20 +1,31 @@
+local Util = require 'util'
 local Character = {}
 
 Character.__index = Character
 
-function Character.create()
+function Character.create(world, x, y)
     local self = setmetatable({}, Character)
-    self.x = 0
-    self.y = 0
+    self.x = x
+    self.y = y
     self.vx = 0
     self.vy = 0
     self.accel = 20
     self.decel = 23
+    self.world = world
+    self.width = 10
+    self.height = 10
+    self.world:add(self, self.x, self.y, self.width, self.height)
     return self
 end
 
+function Character:update(dt)
+
+end
+
 function Character:draw()
-    -- I want to be implemented really bad!!!
+    if Util:isDebug() then
+        love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+    end
 end
 
 function Character:moveRight()
@@ -52,6 +63,52 @@ function Character:stopUpDown()
     elseif self.vy > 0 then
         self.vy = math.max(0, self.vy - self.decel)
     end
+end
+
+function Character:isMovingUpOrDown()
+    return self.vy ~= 0
+end
+
+function Character:isMovingLeftOrRight()
+    return self.vx ~= 0
+end
+
+function Character:isMovingUp()
+    return self.vy < 0
+end
+
+function Character:isMovingDown()
+    return self.vy > 0
+end
+
+function Character:isMovingLeft()
+    return self.vx < 0
+end
+
+function Character:isMovingRight()
+    return self.vx > 0
+end
+
+function Character:move(x, y)
+    local ax, ay, cols, len = self.world:check(self, x, y)
+
+    for i, col in ipairs(cols) do
+        if col.type == 'slide' then
+            if col.normal.x ~= 0 then
+                -- bounce a bit ;)
+                self.vx = -(self.vx) * 0.4
+            end
+            if col.normal.y ~= 0 then
+                -- bounce a bit ;)
+                self.vy = -(self.vy) * 0.4
+            end
+        end
+    end
+
+    self.x = ax
+    self.y = ay
+
+    self.world:update(self, self.x, self.y)
 end
 
 return Character
