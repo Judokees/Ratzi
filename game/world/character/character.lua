@@ -9,7 +9,7 @@ function Character.create()
     self.vx = 0
     self.vy = 0
     self.accel = 20
-    self.decel = 23
+    self.decel = 100
     return self
 end
 
@@ -52,6 +52,30 @@ function Character:stopUpDown()
     elseif self.vy > 0 then
         self.vy = math.max(0, self.vy - self.decel)
     end
+end
+
+function Character:isMovingUpOrDown()
+    return self.vy ~= 0
+end
+
+function Character:isMovingLeftOrRight()
+    return self.vx ~= 0
+end
+
+function Character:isMovingUp()
+    return self.vy < 0
+end
+
+function Character:isMovingDown()
+    return self.vy > 0
+end
+
+function Character:isMovingLeft()
+    return self.vx < 0
+end
+
+function Character:isMovingRight()
+    return self.vx > 0
 end
 
 return Character
