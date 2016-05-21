@@ -13,11 +13,12 @@ setmetatable(Player, { __index = Character })
 function Player.create(world)
     local self = Character.create(world, 0, 0)
     setmetatable(self, Player)
+    self.path = "media/Ronny_"
     return self
 end
 
 function Player:load()
-
+    Character.load(self)
 end
 
 function Player:update(dt)
@@ -53,11 +54,11 @@ function Player:update(dt)
     self.vy = math.min(400, math.max(self.vy, -400))
 
     self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
+    Character.update(self, dt)
 end
 
 function Player:draw()
     Character.draw(self)
-    love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
 end
 
 function Player:getDebug()

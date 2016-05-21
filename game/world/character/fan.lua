@@ -10,20 +10,24 @@ function Fan.create(world, player)
     local self = Character.create(world, 100, 100)
     setmetatable(self, Fan)
     self.player = player
+    self.maxSpeed = 150
+    self.radius = 120
+    self.path = "media/Ronny_"
     return self
 end
 
 function Fan:load()
-
+    Character.load(self)
 end
 
 function Fan:update(dt)
     self.vx, self.vy = self:_calculateVelocity()
     self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
+    Character.update(self, dt)
 end
 
 function Fan:draw()
-    love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
+    Character.draw(self)
     if Util:isDebug() then
         love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
     end
@@ -34,9 +38,9 @@ end
 function Fan:_calculateSpeed()
     -- This determines the magnitude of the velocity of the fan.
     -- This is the function we should change to make the fan behave differently.
-    local distance = self:_distanceSquaredFromPlayer()
-    if distance < 100 * 100 then
-        return 100
+    local distanceSquared = self:_distanceSquaredFromPlayer()
+    if distanceSquared < self.radius * self.radius then
+        return self.maxSpeed
     end
     return 0
 end
