@@ -4,6 +4,7 @@ local Player = require 'game.world.character.player'
 local Fan = require 'game.world.character.fan'
 local Map = require 'game.world.map'
 local Camera = require 'game.camera'
+local Util = require 'util'
 
 local windowWidth, windowHeight = love.graphics.getDimensions()
 
@@ -34,6 +35,7 @@ function Level:update(dt)
     self.player:update(dt)
     self.fan:update(dt)
     Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
+    Util:stackDebug(self.player:getDebug())
 end
 
 function Level:draw()

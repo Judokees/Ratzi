@@ -1,4 +1,5 @@
 local STI = require 'libs.STI'
+local Util = require 'util'
 
 local Map = {}
 
@@ -16,6 +17,11 @@ end
 function Map:load(path)
     self.map = STI.new(path, { "bump" })
     self.map:bump_init(self.world)
+    for i, layer in ipairs(self.map.layers) do
+        if layer.type == 'objectgroup' then
+            self.map:removeLayer(i)
+        end
+    end
 end
 
 function Map:update(dt)
@@ -29,8 +35,11 @@ function Map:draw()
     -- Draw the map and all objects within
     self.map:draw()
 
-    -- Draw Collision Map (useful for debugging)
-    self.map:bump_draw(self.world)
+    if Util:isDebug() then
+        -- Draw Collision Map (useful for debugging)
+        self.map:bump_draw(self.world)
+    end
+
 end
 
 function Map:getBounds()
