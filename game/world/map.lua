@@ -17,6 +17,11 @@ end
 function Map:load(path)
     self.map = STI.new(path, { "bump" })
     self.map:bump_init(self.world)
+    for i, layer in ipairs(self.map.layers) do
+        if layer.type == 'objectgroup' then
+            self.map:removeLayer(i)
+        end
+    end
 end
 
 function Map:update(dt)
