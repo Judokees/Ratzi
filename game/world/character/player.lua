@@ -56,6 +56,7 @@ function Player:update(dt)
 
     if love.keyboard.isDown(SPACE_KEY) and not self.pulse then
         self.pulse = true
+        self.reputation = self.reputation - 0.01
     end
 
     self.vx = math.min(400, math.max(self.vx, -400))
@@ -63,6 +64,15 @@ function Player:update(dt)
 
     self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
     Character.update(self, dt)
+end
+
+function Player:showReputation()
+    love.graphics.rectangle("fill", 10, 0, 120, 60)
+    love.graphics.setColor(255, 0, 0)
+    if self.reputation >= 0 then
+        love.graphics.rectangle("fill", 20, 5, 100 * self.reputation, 50)
+    end
+    love.graphics.setColor(255, 255, 255)
 end
 
 function Player:solveCollision(x, y, ax, ay, cols, len)
@@ -84,6 +94,7 @@ end
 
 function Player:draw()
     Character.draw(self)
+    self:showReputation()
 end
 
 function Player:getDebug()

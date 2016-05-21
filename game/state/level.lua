@@ -31,8 +31,9 @@ function Level:load()
     local spawn = self.map:getSpawn()
     --self.player:move(spawn.x, spawn.y)
     local bounds = self.map:getBounds()
-    for i=1,100 do
-        local fan = Fan.create(self.world, self.player)
+    for i=1,500 do
+        local npcNumber = math.floor(math.random(14))
+        local fan = Fan.create(self.world, self.player, npcNumber)
         fan:load()
         fan:move(math.floor(love.math.random() * (bounds.width - fan.width)), math.floor(love.math.random() * (bounds.height - fan.height)))
         table.insert(self.fans, fan)

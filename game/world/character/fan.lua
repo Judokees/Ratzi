@@ -6,7 +6,7 @@ Fan.__index = Fan
 
 setmetatable(Fan, { __index = Character })
 
-function Fan.create(world, player)
+function Fan.create(world, player, npcNumber)
     local self = Character.create(world, 100, 100)
     setmetatable(self, Fan)
     self.type = 'fan'
@@ -14,9 +14,9 @@ function Fan.create(world, player)
     self.maxSpeed = 300
     self.minSpeed = 10
     self.radius = 800
-    self.path = "media/Ronny_"
     self.pulseSpeed = 500
     self.pulsed = false
+    self.path = "media/npc" .. npcNumber .. "_"
     return self
 end
 
