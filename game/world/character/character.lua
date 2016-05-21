@@ -145,6 +145,15 @@ end
 function Character:move(x, y)
     local ax, ay, cols, len = self.world:check(self, x, y)
 
+    ax, ay, cols, len = self:solveCollision(x, y, ax, ay, cols, len)
+
+    self.x = ax
+    self.y = ay
+
+    self.world:update(self, self.x, self.y)
+end
+
+function Character:solveCollision(x, y, ax, ay, cols, len)
     for i, col in ipairs(cols) do
         if col.type == 'slide' then
             if col.normal.x ~= 0 then
@@ -157,14 +166,10 @@ function Character:move(x, y)
             end
         end
     end
-
-    self.x = ax
-    self.y = ay
-
     if self.vy ~= 0 or self.vx ~= 0 then
         self.angle = math.atan2(self.vy, self.vx)
     end
-    self.world:update(self, self.x, self.y)
+    return ax, ay, cols, len
 end
 
 return Character

@@ -19,9 +19,8 @@ function Level.create(id)
     setmetatable(self, Level)
     self.world = bump.newWorld()
     self.player = Player.create(self.world)
-    self.fan = Fan.create(self.world, self.player)
+    self.fans = {}
     self.map = Map.create(self.world)
-    self.news = NewsPaper.create('Super rich guy buys toilet paper')
     self.id = id
     return self
 end
@@ -29,16 +28,21 @@ end
 function Level:load()
     self.map:load('res/map/' .. self.id .. '.lua')
     self.player:load(self.world)
-    self.fan:load()
-    self.news:load()
-    self.news:show()
+    local bounds = self.map:getBounds()
+    for i=1,100 do
+        local fan = Fan.create(self.world, self.player)
+        fan:load()
+        fan:move(math.floor(love.math.random() * (bounds.width - fan.width)), math.floor(love.math.random() * (bounds.height - fan.height)))
+        table.insert(self.fans, fan)
+    end
 end
 
 function Level:update(dt)
     self.map:update(dt)
     self.player:update(dt)
-    self.fan:update(dt)
-    self.news:update(dt)
+    for _, fan in ipairs(self.fans) do
+        fan:update(dt)
+    end
     Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
     Util:stackDebug(self.player:getDebug())
 end
@@ -47,9 +51,10 @@ function Level:draw()
     Camera:set()
     self.map:draw(Camera.x, Camera.y, windowWidth, windowHeight)
     self.player:draw()
-    self.fan:draw()
+    for _, fan in ipairs(self.fans) do
+        fan:draw()
+    end
     Camera:unset()
-    self.news:draw()
 end
 
 return Level

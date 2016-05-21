@@ -18,6 +18,7 @@ function love.load(args)
     StateManager:add('splash', splash)
     StateManager:show('splash')
     StateManager:load(args)
+    love.graphics.setBackgroundColor(185, 185, 185)
 end
 
 function love.update(dt)

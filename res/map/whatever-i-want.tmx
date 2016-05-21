@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="161" height="89" tilewidth="100" tileheight="100" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="161" height="89" tilewidth="100" tileheight="100" nextobjectid="2">
  <tileset firstgid="1" name="tile1" tilewidth="100" tileheight="100" tilecount="1" columns="1">
   <image source="../images/map/tile1.png" width="100" height="100"/>
  </tileset>
- <imagelayer name="background">
+ <imagelayer name="Background" visible="0">
   <image source="../images/map/mapi.png" width="16101" height="8900"/>
  </imagelayer>
  <layer name="collision" width="161" height="89">
@@ -102,4 +102,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup name="Objects">
+  <properties>
+   <property name="id" value="objects"/>
+  </properties>
+  <object id="1" x="8318.51" y="3637.83" width="64.6726" height="80.8407">
+   <properties>
+    <property name="type" value="spawn"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

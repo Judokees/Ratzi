@@ -1,5 +1,6 @@
 local STI = require 'libs.STI'
 local Util = require 'util'
+local Camera = require 'game.camera'
 
 local Map = {}
 
@@ -19,6 +20,13 @@ function Map:load(path)
     self.map:bump_init(self.world)
     for i, layer in ipairs(self.map.layers) do
         if layer.type == 'objectgroup' then
+            for _, object in ipairs(layer.objects) do
+                if object.type == 'spawn' then
+                    self.spawn = { x = object.x, y = object.y }
+                end
+            end
+        end
+        if layer.type == 'objectgroup' then
             self.map:removeLayer(i)
         end
     end
@@ -30,7 +38,7 @@ end
 
 function Map:draw()
     -- Draw Range culls unnecessary tiles
-    self.map:setDrawRange(0, 0, width, height)
+    self.map:setDrawRange(Camera.x, Camera.y, width, height)
 
     -- Draw the map and all objects within
     self.map:draw()

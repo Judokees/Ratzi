@@ -9,6 +9,7 @@ setmetatable(Fan, { __index = Character })
 function Fan.create(world, player)
     local self = Character.create(world, 100, 100)
     setmetatable(self, Fan)
+    self.type = 'fan'
     self.player = player
     self.maxSpeed = 150
     self.radius = 120
@@ -29,6 +30,7 @@ end
 function Fan:draw()
     Character.draw(self)
     if Util:isDebug() then
+        love.graphics.print("vx " .. math.floor(self.vx) .. " vy " .. math.floor(self.vy), self.x, self.y)
         love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
     end
 end

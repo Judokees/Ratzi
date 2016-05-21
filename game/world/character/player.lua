@@ -1,9 +1,9 @@
 local Character = require 'game.world.character.character'
 
-local RIGHT_KEY = 'right'
-local LEFT_KEY = 'left'
-local UP_KEY = 'up'
-local DOWN_KEY = 'down'
+local RIGHT_KEY = 'd'
+local LEFT_KEY = 'a'
+local UP_KEY = 'w'
+local DOWN_KEY = 's'
 
 local Player = {}
 Player.__index = Player
@@ -55,6 +55,23 @@ function Player:update(dt)
 
     self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
     Character.update(self, dt)
+end
+
+function Player:solveCollision(x, y, ax, ay, cols, len)
+    ax, ay, cols, len = Character.solveCollision(self, x, y, ax, ay, cols, len)
+    for _, col in ipairs(cols) do
+        if col.other.type == 'fan' and col.type == 'slide' then
+            if col.normal.y ~= 0 then
+                print 'y'
+                col.other.vy = self.vy * 0.5
+            end
+            if col.normal.x ~= 0 then
+                print 'x'
+                col.other.vx = self.vx * 0.5
+            end
+        end
+    end
+    return ax, ay, cols, len
 end
 
 function Player:draw()
