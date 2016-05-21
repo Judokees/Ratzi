@@ -14,8 +14,11 @@ function Character.create(world, x, y)
     self.world = world
     self.frame = 1
     self.totalFrames = 4
+    self.angle = 0
+
     -- this is set by the classes that use character.lua
     self.path = ""
+
     self.images = {}
     self.updateTime = 0.1
     self._dt = 0
@@ -70,7 +73,12 @@ function Character:draw()
         love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
     end
     local image = self:getImageFromFrame()
-    love.graphics.draw(image, self.x, self.y)
+    local xOffset = self.width / 2
+    local yOffset = self.height / 2
+    local x = self.x + xOffset
+    local y = self.y + yOffset
+
+    love.graphics.draw(image, x, y, self.angle, 1, 1, xOffset, yOffset)
 end
 
 function Character:moveRight()
@@ -153,6 +161,9 @@ function Character:move(x, y)
     self.x = ax
     self.y = ay
 
+    if self.vy ~= 0 or self.vx ~= 0 then
+        self.angle = math.atan2(self.vy, self.vx)
+    end
     self.world:update(self, self.x, self.y)
 end
 
