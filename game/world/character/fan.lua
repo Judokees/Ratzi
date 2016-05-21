@@ -17,6 +17,10 @@ function Fan.create(world, player, npcNumber)
     self.pulseSpeed = 500
     self.pulsed = false
     self.path = "media/npc" .. npcNumber .. "_"
+    self.walkUpdateTime = math.random(1.5, 3)
+    self.randomXSpeed = math.random(50, 100)
+    self.randomYSpeed = math.random(50, 100)
+    self._walkdt = 0
     return self
 end
 
@@ -30,8 +34,10 @@ function Fan:update(dt)
         self.vx = -self.vx
         self.vy = -self.vy
         self.pulsed = false
-    else
+    elseif self:isWithinDistanceFromPlayer(self.radius) then
         self.vx, self.vy = self:_calculateVelocity()
+    else
+        self.vx, self.vy = self:_randomWalk(dt)
     end
     self:move(self.x + (self.vx * dt), self.y + (self.vy * dt))
     Character.update(self, dt)
@@ -116,6 +122,29 @@ function Fan:_calculateVelocity()
         return speed, 0
     else
         return self:_getXYFromSpeedAndRatio(speed, xYRatio)
+    end
+end
+
+function Fan:_randomWalk(dt)
+    local directionX = self:_oneOrMinuxOne()
+    local directionY = self:_oneOrMinuxOne()
+    local vx = self.vx
+    local vy = self.vy
+    if self._walkdt > self.walkUpdateTime then
+        self._walkdt = 0
+        vx, vy = directionX * self.randomXSpeed, directionY * self.randomYSpeed
+    else
+        self._walkdt = self._walkdt + dt
+    end
+    return vx, vy
+end
+
+function Fan:_oneOrMinuxOne()
+    local number = math.random(-1, 1)
+    if number < 0 then
+        return -1
+    else
+        return 1
     end
 end
 

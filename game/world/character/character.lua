@@ -20,7 +20,7 @@ function Character.create(world, x, y)
     self.path = ""
 
     self.images = {}
-    self.updateTime = 0.1
+    self.frameUpdateTime = 0.1
     self._dt = 0
     return self
 end
@@ -50,7 +50,7 @@ end
 
 function Character:update(dt)
     if self:isMovingLeftOrRight() or self:isMovingUpOrDown() then
-        if self._dt > self.updateTime then
+        if self._dt > self.frameUpdateTime then
             self:updateFrame()
             self._dt = 0
         else
