@@ -27,8 +27,7 @@ function Fan:update(dt)
 end
 
 function Fan:draw()
-    love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
-    -- Character.draw(self)
+    Character.draw(self)
     if Util:isDebug() then
         love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
     end
