@@ -1,6 +1,7 @@
 local StateManager = require 'game.state.state_manager'
 local Splash = require 'game.state.splash'
 local Level = require 'game.state.level'
+local Util = require 'util'
 
 function love.load(args)
     love.handlers.nextstate = function (a, b, c, d)
@@ -19,6 +20,7 @@ end
 
 function love.update(dt)
     dt = math.min(1/60, dt)
+    Util:update(dt)
     StateManager:update(dt)
 end
 
@@ -27,6 +29,9 @@ function love.keypressed(key)
         love.event.quit();
     end
     StateManager:keypressed(key)
+    if key == "tab" then
+        Util:setDebug(not Util:isDebug())
+    end
 end
 
 function love.keyreleased(key)
@@ -35,4 +40,5 @@ end
 
 function love.draw()
     StateManager:draw()
+    Util:draw()
 end

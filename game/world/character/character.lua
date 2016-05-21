@@ -1,3 +1,4 @@
+local Util = require 'util'
 local Character = {}
 
 Character.__index = Character
@@ -22,7 +23,9 @@ function Character:update(dt)
 end
 
 function Character:draw()
-    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+    if Util:isDebug() then
+        love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+    end
 end
 
 function Character:moveRight()
@@ -88,6 +91,17 @@ end
 
 function Character:move(x, y)
     local ax, ay, cols, len = self.world:check(self, x, y)
+
+    for i, col in ipairs(cols) do
+        if col.type == 'slide' then
+            if col.normal.x ~= 0 then
+                self.vx = 0
+            end
+            if col.normal.y ~= 0 then
+                self.vy = 0
+            end
+        end
+    end
 
     self.x = ax
     self.y = ay

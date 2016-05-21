@@ -1,4 +1,5 @@
 local STI = require 'libs.STI'
+local Util = require 'util'
 
 local Map = {}
 
@@ -29,8 +30,11 @@ function Map:draw()
     -- Draw the map and all objects within
     self.map:draw()
 
-    -- Draw Collision Map (useful for debugging)
-    self.map:bump_draw(self.world)
+    if Util:isDebug() then
+        -- Draw Collision Map (useful for debugging)
+        self.map:bump_draw(self.world)
+    end
+
 end
 
 function Map:getBounds()

@@ -1,4 +1,5 @@
 local Character = require 'game.world.character.character'
+local Util = require 'util'
 
 local Fan = {}
 Fan.__index = Fan
@@ -24,10 +25,10 @@ function Fan:update(dt)
 end
 
 function Fan:draw()
-    love.graphics.print('vx: ' .. self.vx .. ', vy: ' .. self.vy, 105, 105)
-    love.graphics.print('x: ' .. self.x .. ', y: ' .. self.y, 105, 125)
     love.graphics.circle('fill', self.x + 5, self.y + 5, 5)
-    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+    if Util:isDebug() then
+        love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+    end
 end
 
 return Fan
