@@ -12,20 +12,65 @@ function Character.create(world, x, y)
     self.accel = 20
     self.decel = 23
     self.world = world
-    self.width = 10
-    self.height = 10
-    self.world:add(self, self.x, self.y, self.width, self.height)
+    self.frame = 1
+    self.totalFrames = 4
+    -- this is set by the classes that use character.lua
+    self.path = ""
+    self.images = {}
+    self.updateTime = 0.1
+    self._dt = 0
     return self
 end
 
-function Character:update(dt)
+function Character:load()
+    self.images = self:loadImages()
+    self.width, self.height = self.images[self.frame]:getDimensions()
+    self.world:add(self, self.x, self.y, self.width, self.height)
+end
 
+function Character:loadImages()
+    if self.path == "" then
+        print("ERROR: Need to set image!")
+        return
+    end
+
+    local imageArray = {}
+    for i = 1, self.totalFrames do
+        imageArray[i] = love.graphics.newImage(self:getImagePath(i))
+    end
+    return imageArray
+end
+
+function Character:getImagePath(frame)
+    return self.path .. frame .. ".png"
+end
+
+function Character:update(dt)
+    if self:isMovingLeftOrRight() or self:isMovingUpOrDown() then
+        if self._dt > self.updateTime then
+            self:updateFrame()
+            self._dt = 0
+        else
+            self._dt = self._dt + dt
+        end
+    end
+end
+
+function Character:updateFrame()
+    self.frame = (self.frame) % self.totalFrames + 1
+    return self.frame
+end
+
+function Character:getImageFromFrame()
+    return self.images[self.frame]
 end
 
 function Character:draw()
     if Util:isDebug() then
         love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
     end
+    local image = self:getImageFromFrame()
+    love.graphics.draw(image, self.x, self.y)
 end
 
 function Character:moveRight()
