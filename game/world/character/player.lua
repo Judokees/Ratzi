@@ -11,7 +11,7 @@ Player.__index = Player
 setmetatable(Player, { __index = Character })
 
 function Player.create(world)
-    local self = Character.create(world, 0 , 0)
+    local self = Character.create(world, 0, 0)
     setmetatable(self, Player)
     return self
 end
