@@ -16,7 +16,7 @@ function Fan.create(world, player, npcNumber)
     self.radius = 800
     self.pulseSpeed = 500
     self.pulsed = false
-    self.path = "media/npc" .. npcNumber .. "_"
+    self.path = "media/NPC/npc" .. npcNumber .. "_"
     self.walkUpdateTime = math.random(1.5, 3)
     self.randomXSpeed = math.random(50, 100)
     self.randomYSpeed = math.random(50, 100)
