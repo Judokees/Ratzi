@@ -95,10 +95,12 @@ function Character:move(x, y)
     for i, col in ipairs(cols) do
         if col.type == 'slide' then
             if col.normal.x ~= 0 then
-                self.vx = 0
+                -- bounce a bit ;)
+                self.vx = -(self.vx) * 0.4
             end
             if col.normal.y ~= 0 then
-                self.vy = 0
+                -- bounce a bit ;)
+                self.vy = -(self.vy) * 0.4
             end
         end
     end
