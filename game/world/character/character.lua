@@ -17,8 +17,12 @@ function Character.create(world)
     return self
 end
 
+function Character:update(dt)
+
+end
+
 function Character:draw()
-    -- I want to be implemented really bad!!!
+    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
 end
 
 function Character:moveRight()
@@ -63,6 +67,8 @@ function Character:move(x, y)
 
     self.x = ax
     self.y = ay
+
+    self.world:update(self, self.x, self.y)
 end
 
 return Character
