@@ -15,6 +15,7 @@ function loadLevel(levelIndex)
 end
 
 function love.load(args)
+    love.mouse.setVisible(false)
     local levelIndex = 1
     FontManager:load()
     SoundManager:load()
