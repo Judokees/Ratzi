@@ -24,6 +24,7 @@ function AnnoyingBastard.create(world, player, x, y, npcNumber)
 end
 
 function AnnoyingBastard:load()
+    self.screamSound = love.audio.newSource("media/high_pitched_female_scream.mp3", "static")
     Character.load(self)
 end
 
@@ -51,6 +52,7 @@ end
 
 function AnnoyingBastard:beingPulsed()
     self.pulsed = true
+    self.screamSound:play()
     local x, y = self:_getXYFromSpeedAndRatio(self.pulseSpeed, self:_getXYRatio())
     return x, y
 end
