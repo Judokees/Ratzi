@@ -6,5 +6,8 @@ You can push people out of the way, but be careful not to let your reputation dr
 
 Made with LÖVE2D, version 0.10
 
-See the following to get it running:
-https://love2d.org/wiki/Getting_Started
+###To run this game:
+
+ - Run the install.sh script to get all the dependencies
+
+ - See the following to get it running: https://love2d.org/wiki/Getting_Started
