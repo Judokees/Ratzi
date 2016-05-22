@@ -8,8 +8,12 @@
    </properties>
   </tile>
  </tileset>
+ <objectgroup name="Player"/>
  <imagelayer name="Image Layer 1">
   <image source="../images/map/Map 6.png" width="5355" height="3362"/>
+  <properties>
+   <property name="id" value="player"/>
+  </properties>
  </imagelayer>
  <layer name="Tile Layer 2" width="162" height="102">
   <properties>

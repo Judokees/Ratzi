@@ -8,7 +8,7 @@ return {
   height = 102,
   tilewidth = 35,
   tileheight = 35,
-  nextobjectid = 1,
+  nextobjectid = 4,
   properties = {},
   tilesets = {
     {
@@ -40,6 +40,16 @@ return {
   },
   layers = {
     {
+      type = "objectgroup",
+      name = "Player",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      objects = {}
+    },
+    {
       type = "imagelayer",
       name = "Image Layer 1",
       visible = true,
@@ -47,7 +57,9 @@ return {
       offsetx = 0,
       offsety = 0,
       image = "../images/map/Map 6.png",
-      properties = {}
+      properties = {
+        ["id"] = "player"
+      }
     },
     {
       type = "tilelayer",

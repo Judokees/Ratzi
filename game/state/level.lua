@@ -58,8 +58,8 @@ function Level:nextStep()
 end
 
 function Level:load()
-    self.map:load('res/map/' .. self.mapId .. '.lua')
     self.player = Player.create(self.world, self.spawn.x, self.spawn.y)
+    self.map:load('res/map/' .. self.mapId .. '.lua', self.player)
     self.player:load()
     local bounds = self.map:getBounds()
 
@@ -70,15 +70,17 @@ function Level:load()
         local fan = Fan.create(self.world, self.player, fanPos.x, fanPos.y, npcNumber)
         fan:load()
         table.insert(self.fans, fan)
+        self.map:addCharacter(fan)
     end
 
     -- load ratzis
-    for i=1, 300 do
+    for i=1, 100 do
         local npcNumber = math.floor(math.random(8))
         local ratziPos = { x = math.floor(love.math.random() * bounds.width), y = math.floor(love.math.random() * bounds.height)}
         local ratzi = Ratzi.create(self.world, self.player, ratziPos.x, ratziPos.y, npcNumber)
         ratzi:load()
         table.insert(self.ratzis, ratzi)
+        self.map:addCharacter(ratzi)
     end
     for i, step in ipairs(self.steps) do
         local marker = Marker.create(step.position.x, step.position.y)
@@ -116,34 +118,20 @@ end
 
 function Level:update(dt)
     if self.started then
-        self.player:update(dt)
         self:pulse()
-        for _, fan in ipairs(self.fans) do
-            fan:update(dt)
-        end
-        for _, ratzi in ipairs(self.ratzis) do
-            ratzi:update(dt)
-        end
-        Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
-        Util:stackDebug(self.player:getDebug())
     end
-    self.markers[self.currentStep]:update(dt)
     self.map:update(dt)
+    self.markers[self.currentStep]:update(dt)
     self.uiInfo.reputation = self.player.reputation
+    Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
+    Util:stackDebug(self.player:getDebug())
     UI:update(dt, self.uiInfo)
 end
 
 function Level:draw()
     Camera:set()
     self.map:draw(Camera.x, Camera.y, windowWidth, windowHeight)
-    self.player:draw()
     self.markers[self.currentStep]:draw()
-    for _, fan in ipairs(self.fans) do
-        fan:draw()
-    end
-    for _, ratzi in ipairs(self.ratzis) do
-        ratzi:draw()
-    end
     Camera:unset()
     UI:draw()
 end

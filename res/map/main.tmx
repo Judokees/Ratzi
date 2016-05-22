@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="161" height="89" tilewidth="35" tileheight="35" nextobjectid="1">
- <imagelayer name="Background">
-  <image source="../images/map/mapi.png" width="5636" height="3116"/>
- </imagelayer>
-</map>

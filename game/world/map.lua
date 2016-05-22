@@ -12,6 +12,7 @@ function Map.create(world)
     local self = setmetatable({}, Map)
     self.map = nil
     self.world = world
+    self.characterLayer = nil
     return self
 end
 
@@ -19,27 +20,41 @@ function Map:getSpawn()
     return self.spawn
 end
 
-function Map:load(path)
+function Map:load(path, player)
     self.map = STI.new(path, { "bump" })
     self.map:bump_init(self.world)
-    local toRemove = {}
-    for i, layer in pairs(self.map.layers) do
-        -- select the `objects` layer
-        if layer.properties and layer.properties.id == 'objects' then
-            for _, object in ipairs(layer.objects) do
-                if object.properties and object.properties.type == 'spawn' then
-                    self.spawn = { x = object.x, y = object.y }
-                end
-            end
+    for i, layer in ipairs(self.map.layers) do
+        if layer.name == 'Player' then
+            self:addPlayer(i, player)
         end
         if layer.properties and (layer.properties.id == 'objects' or layer.properties.collidable == 'true') then
-            self.map:removeLayer(i)
+            self.map:removeLayer(layer.name)
         end
     end
 end
 
-function Map:update(dt)
+function Map:addPlayer(index, player)
+    self.characterLayer = self.map:convertToCustomLayer(index)
+    self.characterLayer.characters = {}
+    table.insert(self.characterLayer.characters, player)
+    function self.characterLayer:update(dt)
+        for _, ch in ipairs(self.characters) do
+            ch:update(dt)
+        end
+    end
+    function self.characterLayer:draw()
+        for _, ch in ipairs(self.characters) do
+            ch:draw()
+        end
+    end
+end
 
+function Map:addCharacter(character)
+    table.insert(self.characterLayer.characters, character)
+end
+
+function Map:update(dt)
+    self.map:update(dt)
 end
 
 function Map:draw()

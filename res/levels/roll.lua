@@ -14,7 +14,7 @@ return {
             item = "roll",
             marker = "roll",
             position = {
-                x = 910,
+                x = 970,
                 y = 2240
             }
         },
