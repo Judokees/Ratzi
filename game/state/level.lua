@@ -130,12 +130,20 @@ function Level:update(dt)
     self.markers[self.currentStep]:update(dt)
     self.map:update(dt)
     self.uiInfo.reputation = self.player.reputation
+    self.uiInfo.destX = self.steps[self.currentStep].position.x
+    self.uiInfo.destY = self.steps[self.currentStep].position.y
+    self.uiInfo.playerX = self.player.x
+    self.uiInfo.playerY = self.player.y
     UI:update(dt, self.uiInfo)
 end
 
 function Level:draw()
     Camera:set()
     self.map:draw(Camera.x, Camera.y, windowWidth, windowHeight)
+
+    local destx = self.steps[self.currentStep].position.x
+    local desty = self.steps[self.currentStep].position.y
+
     self.player:draw()
     self.markers[self.currentStep]:draw()
     for _, fan in ipairs(self.fans) do
