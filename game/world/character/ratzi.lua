@@ -19,7 +19,7 @@ function Ratzi.create(world, player, x, y, npcNumber)
 end
 
 function Ratzi:load()
-    self.flashImage = love.graphics.newImage("media/Ratzis/Camera_Flash.png")
+    self.flashImage = love.graphics.newImage("media/Ratzis/spotlight.png")
     self.flashWidth, self.flashHeight = self.flashImage:getDimensions()
     AnnoyingBastard.load(self)
 end
@@ -42,17 +42,11 @@ function Ratzi:draw()
     love.graphics.draw(image, x, y, self.angle, 1, 1, xOffset - 3, yOffset)
 
     if self.shouldFlash then
-        local x = self.x + 0.5 * (self.width + self.flashWidth) * math.cos(self.angle)
-        local y = self.y + 0.5 * (self.height + self.flashHeight) * math.sin(self.angle)
-        love.graphics.draw(self.flashImage, x, y, self.angle)
-
-        --[[
-        local xOffset = 0.5 * (self.width + self.flashWidth) * math.cos(self.angle)
-        local yOffset = 0.5 * (self.width + self.flashWidth) * math.sin(self.angle)
-        local x = self.x + xOffset
-        local y = self.y + yOffset
+        local xOffset = self.flashWidth / 2
+        local yOffset = self.flashHeight / 2
+        local x = self.x + self.width / 2 - self.COLLISION_OFFSET
+        local y = self.y + self.height / 2 - self.COLLISION_OFFSET
         love.graphics.draw(self.flashImage, x, y, self.angle, 1, 1, xOffset, yOffset)
-        --]]
     end
 end
 

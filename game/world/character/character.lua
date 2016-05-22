@@ -85,8 +85,8 @@ function Character:draw()
     local image = self:getImageFromFrame()
     local xOffset = self.width / 2
     local yOffset = self.height / 2
-    local x = self.x + xOffset - self.COLLISION_OFFSET
-    local y = self.y + yOffset - self.COLLISION_OFFSET
+    local x = self.x - xOffset - self.COLLISION_OFFSET
+    local y = self.y - yOffset - self.COLLISION_OFFSET
 
     love.graphics.draw(image, x, y, self.angle, 1, 1, xOffset, yOffset)
 end
