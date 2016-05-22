@@ -67,15 +67,6 @@ function Player:update(dt)
     Character.update(self, dt)
 end
 
-function Player:showReputation()
-    love.graphics.rectangle("fill", 10, 0, 120, 60)
-    love.graphics.setColor(255, 0, 0)
-    if self.reputation >= 0 then
-        love.graphics.rectangle("fill", 20, 5, 100 * self.reputation, 50)
-    end
-    love.graphics.setColor(255, 255, 255)
-end
-
 function Player:solveCollision(x, y, ax, ay, cols, len)
     ax, ay, cols, len = Character.solveCollision(self, x, y, ax, ay, cols, len)
     for _, col in ipairs(cols) do
@@ -86,6 +77,9 @@ function Player:solveCollision(x, y, ax, ay, cols, len)
             if col.normal.x ~= 0 then
                 col.other.vx = self.vx * 0.5
             end
+        end
+        if col.other.type == 'marker' then
+            love.event.push('collect')
         end
     end
     return ax, ay, cols, len
@@ -100,7 +94,6 @@ end
 
 function Player:draw()
     Character.draw(self)
-    self:showReputation()
 end
 
 function Player:getDebug()

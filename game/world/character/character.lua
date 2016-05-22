@@ -153,7 +153,7 @@ function Character:isMovingRight()
 end
 
 function Character:move(x, y)
-    local ax, ay, cols, len = self.world:check(self, x, y)
+    local ax, ay, cols, len = self.world:check(self, x, y, self:getFilter())
 
     ax, ay, cols, len = self:solveCollision(x, y, ax, ay, cols, len)
 
@@ -161,6 +161,15 @@ function Character:move(x, y)
     self.y = ay
 
     self.world:update(self, self.x, self.y)
+end
+
+function Character:getFilter()
+    return function (item, other)
+        if other.type == "marker" then
+            return 'cross'
+        end
+        return 'slide'
+    end
 end
 
 function Character:solveCollision(x, y, ax, ay, cols, len)

@@ -179,23 +179,7 @@ return {
       properties = {
         ["id"] = "objects"
       },
-      objects = {
-        {
-          id = 5,
-          name = "Spawn Point",
-          type = "",
-          shape = "rectangle",
-          x = 2953.52,
-          y = 1304.22,
-          width = 14.0398,
-          height = 12.5619,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["type"] = "spawn"
-          }
-        }
-      }
+      objects = {}
     }
   }
 }

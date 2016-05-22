@@ -1,6 +1,6 @@
 local GameState = require 'game.state.game_state'
 
-local windowWidth, windowHeight = love.graphics.getDimensions()
+local ww, wh = love.graphics.getDimensions()
 
 local Splash = {}
 Splash.__index = Splash
@@ -17,6 +17,8 @@ end
 
 function Splash:load()
     self.startTime = love.timer.getTime()
+    self.image = love.graphics.newImage('res/images/RATZi_logo.png')
+    self.imgWidth, self.imgHeight = self.image:getDimensions()
 end
 
 function Splash:update(dt)
@@ -27,7 +29,8 @@ function Splash:update(dt)
 end
 
 function Splash:draw()
-    love.graphics.printf("Winning...", 0, windowHeight / 2, windowWidth, 'center')
+    love.graphics.setBackgroundColor(55, 196, 202)
+    love.graphics.draw(self.image, ww / 2 - self.imgWidth / 2, wh / 2 - self.imgHeight / 2)
 end
 
 return Splash
