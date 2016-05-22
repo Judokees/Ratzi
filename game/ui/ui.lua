@@ -9,12 +9,13 @@ function UI:load()
     self.staminaBar = ProgressBar.create(0, 1, {
         padding = 5,
         backColor = {0, 0, 0},
-        fillColor = {150, 150, 150},
+        fillColor = {155, 155, 155},
         width = 300,
         height = 40
     })
     self.notification = nil
-    self.arrowImage = love.graphics.newImage("media/arrow.png")
+    self.arrowImage = love.graphics.newImage("media/compass-arrow.png")
+    self.compassImage = love.graphics.newImage("media/compass.png")
 end
 
 function UI:update(dt, info)
@@ -52,7 +53,9 @@ function UI:draw()
     love.graphics.push()
     love.graphics.translate(10, 10)
     self.staminaBar:draw()
-    love.graphics.translate(windowWidth - 150, 100)
+    love.graphics.pop()
+    love.graphics.push()
+    love.graphics.translate(windowWidth - 60, 60)
     self:drawArrow(self.destX, self.destY)
     love.graphics.pop()
     if self.notification then
@@ -64,7 +67,8 @@ function UI:drawArrow(destx, desty)
     local arrowWidth, arrowHeight = self.arrowImage:getDimensions()
     local xOffset = arrowWidth / 2
     local yOffset = arrowHeight / 2
-    local angle = math.atan2(desty - self.playerY, destx - self.playerX)
+    local angle = math.atan2(desty - self.playerY, destx - self.playerX) + math.pi /2
+    love.graphics.draw(self.compassImage, 0, 0, angle, 1, 1, xOffset, yOffset)
     love.graphics.draw(self.arrowImage, 0, 0, angle, 1, 1, xOffset, yOffset)
 end
 

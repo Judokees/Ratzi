@@ -32,6 +32,7 @@ function ProgressBar:draw()
     love.graphics.rectangle('fill', 0, 0, self.style.width, self.style.height)
     love.graphics.setColor(unpack(self.style.fillColor))
     love.graphics.rectangle('fill', self.style.padding, self.style.padding, self.value / self.max * (self.style.width - self.style.padding * 2), self.style.height - self.style.padding * 2)
+    love.graphics.setColor(255, 255, 255)
 end
 
 return ProgressBar
