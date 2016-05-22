@@ -31,6 +31,9 @@ function love.load(args)
             loadLevel(levelIndex)
         end
     end
+    love.handlers.gameOver = function (a, b, c, d)
+        -- show splash screen
+    end
     local splash = Splash.create()
     StateManager:add('splash', splash)
     StateManager:show('splash')
