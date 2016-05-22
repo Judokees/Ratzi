@@ -124,10 +124,5 @@
   <properties>
    <property name="id" value="objects"/>
   </properties>
-  <object id="5" name="Spawn Point" x="2953.52" y="1304.22" width="14.0398" height="12.5619">
-   <properties>
-    <property name="type" value="spawn"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

@@ -1,4 +1,4 @@
-local Notification = require 'game.world.notification.Notification'
+local Notification = require 'game.ui.notification.Notification'
 local FontManager = require 'game.font_manager'
 local Util = require 'util'
 

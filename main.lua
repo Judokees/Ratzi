@@ -1,17 +1,32 @@
 local StateManager = require 'game.state.state_manager'
 local FontManager = require 'game.font_manager'
 local Splash = require 'game.state.splash'
+local Intro = require 'game.state.intro'
 local Level = require 'game.state.level'
 local Util = require 'util'
+local levels = require 'res.levels.levels'
+
+function loadLevel(levelIndex)
+    local level = Level.create(levels[levelIndex])
+    StateManager:add('level', level)
+    StateManager:show('level')
+    StateManager:load(args)
+end
 
 function love.load(args)
+    local levelIndex = 1
     FontManager:load()
     love.handlers.nextstate = function (a, b, c, d)
         if StateManager:getStateId() == 'splash' then
-            local level = Level.create('whatever-i-want')
-            StateManager:add('level', level)
-            StateManager:show('level')
+            local intro = Intro.create()
+            StateManager:add('intro', intro)
+            StateManager:show('intro')
             StateManager:load(args)
+        elseif StateManager:getStateId() == 'intro' then
+            loadLevel(levelIndex)
+        elseif StateManager:getStateId() == 'level' then
+            levelIndex = levelIndex + 1
+            loadLevel(levelIndex)
         end
     end
     local splash = Splash.create()
