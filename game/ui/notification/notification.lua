@@ -36,7 +36,7 @@ end
 
 function Notification:load()
     self.x = width - self.width - 50
-    self.targetY = height - self.height + 20
+    self.targetY = height - self.height + 40
 end
 
 
