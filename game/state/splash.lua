@@ -17,7 +17,7 @@ end
 
 function Splash:load()
     self.startTime = love.timer.getTime()
-    self.image = love.graphics.newImage('res/images/RATZi_logo.png')
+    self.image = love.graphics.newImage('res/images/Title_screen.png')
     self.imgWidth, self.imgHeight = self.image:getDimensions()
 end
 

@@ -12,6 +12,7 @@ end
 
 function SoundManager:load()
     SoundManager.sounds.intro = love.audio.newSource("res/sounds/intro.mp3", "static")
+    SoundManager.sounds.vibration = love.audio.newSource("res/sounds/vibration.mp3", "static")
 end
 
 function SoundManager:get(id)

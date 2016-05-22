@@ -1,4 +1,5 @@
 local Notification = require 'game.ui.notification.notification'
+local SoundManager = require 'game.sound_manager'
 local Util = require 'util'
 
 local Phone = {}
@@ -22,6 +23,11 @@ function Phone:load()
     Notification.load(self)
 end
 
+function Phone:show()
+    Notification.show(self)
+    SoundManager:get('vibration'):play()
+end
+
 function Phone:update(dt)
     Notification.update(self, dt)
 end
@@ -29,7 +35,7 @@ end
 function Phone:draw()
     Notification.draw(self)
     if self:shouldDraw() then
-        love.graphics.draw(self.image, self.x, self.y, 0, self.scale, self.scale)
+        love.graphics.draw(self.image, self.x, self.y)
     end
 end
 
