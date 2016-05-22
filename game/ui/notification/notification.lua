@@ -43,14 +43,14 @@ end
 function Notification:update(dt)
     if self.state == self.STATE_RISING then
         self.elapsed = self.elapsed + dt
-        self.y = bounceIn(self.elapsed, height, self.targetY - height, 1)
+        self.y = bounceIn(self.elapsed, height, self.targetY - height, 0.9)
         if self.elapsed > 1 then
             self.state = self.STATE_OPEN
             self.elapsed = 0
         end
     elseif self.state == self.STATE_FALLING then
         self.elapsed = self.elapsed + dt
-        self.y = bounceOut(self.elapsed, self.targetY, height, 1)
+        self.y = bounceOut(self.elapsed, self.targetY, height, 0.3)
         if self.elapsed > 1 then
             self.state = self.STATE_CLOSED
             self.elapsed = 0

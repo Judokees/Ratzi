@@ -1,4 +1,5 @@
 local GameState = require 'game.state.game_state'
+local SoundManager = require 'game.sound_manager'
 
 local ww, wh = love.graphics.getDimensions()
 
@@ -20,11 +21,12 @@ function Intro:load()
     self.imgWidth, self.imgHeight = self.image:getDimensions()
     self.x = ww / 2 - self.imgWidth / 2
     self.y = wh - self.imgHeight + 10
+    SoundManager:get('intro'):play()
 end
 
 function Intro:update(dt)
-    self.rotation = math.min(0, self.rotation + math.rad(10))
-    self.scale = math.max(0.8, self.scale - 9 * (10 / 720))
+    self.rotation = math.min(0, self.rotation + math.rad(13))
+    self.scale = math.max(0.8, self.scale - 9 * (13 / 720))
 end
 
 function Intro:draw()

@@ -1,5 +1,6 @@
 local StateManager = require 'game.state.state_manager'
 local FontManager = require 'game.font_manager'
+local SoundManager = require 'game.sound_manager'
 local Splash = require 'game.state.splash'
 local Intro = require 'game.state.intro'
 local Level = require 'game.state.level'
@@ -16,6 +17,7 @@ end
 function love.load(args)
     local levelIndex = 1
     FontManager:load()
+    SoundManager:load()
     love.handlers.nextstate = function (a, b, c, d)
         if StateManager:getStateId() == 'splash' then
             local intro = Intro.create()
