@@ -29,7 +29,7 @@ function Splash:update(dt)
 end
 
 function Splash:draw()
-    love.graphics.setBackgroundColor(55, 196, 202)
+    love.graphics.setBackgroundColor(252,230,139)
     love.graphics.draw(self.image, ww / 2 - self.imgWidth / 2, wh / 2 - self.imgHeight / 2)
 end
 

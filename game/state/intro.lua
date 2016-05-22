@@ -30,7 +30,7 @@ function Intro:update(dt)
 end
 
 function Intro:draw()
-    love.graphics.setBackgroundColor(55, 196, 202)
+    love.graphics.setBackgroundColor(252,230,139)
     love.graphics.push()
     love.graphics.translate(ww / 2, wh / 2)
     love.graphics.scale(self.scale, self.scale)
