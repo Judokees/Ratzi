@@ -94,6 +94,7 @@ end
 
 function Level:start()
     self.started = true
+    self.map.started = true
 end
 
 function Level:pulse()

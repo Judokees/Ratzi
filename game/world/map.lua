@@ -13,6 +13,7 @@ function Map.create(world)
     self.map = nil
     self.world = world
     self.characterLayer = nil
+    self.started = false
     return self
 end
 
@@ -37,7 +38,9 @@ function Map:addPlayer(index, player)
     self.characterLayer = self.map:convertToCustomLayer(index)
     self.characterLayer.characters = {}
     table.insert(self.characterLayer.characters, player)
+    local map = self
     function self.characterLayer:update(dt)
+        if not map.started then return end
         for _, ch in ipairs(self.characters) do
             ch:update(dt)
         end
