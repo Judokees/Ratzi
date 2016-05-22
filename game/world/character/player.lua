@@ -18,6 +18,7 @@ function Player.create(world, x, y)
     self.reputation = 1
     self.pulse = false
     self.pulseRadius = 100
+    self.gameOver = false
     return self
 end
 
@@ -56,7 +57,7 @@ function Player:update(dt)
 
     if love.keyboard.isDown(SPACE_KEY) and not self.pulse then
         self.pulse = true
-        self.reputation = self.reputation - 0.01
+        self.reputation = math.max(self.reputation - 0.01, 0)
     end
 
     self.vx = math.min(400, math.max(self.vx, -400))
@@ -88,6 +89,13 @@ function Player:solveCollision(x, y, ax, ay, cols, len)
         end
     end
     return ax, ay, cols, len
+end
+
+function Player:checkReputation()
+    if self.reputation == 0 then
+        self.gameOver = true
+        love.event.push("gameOver")
+    end
 end
 
 function Player:draw()
