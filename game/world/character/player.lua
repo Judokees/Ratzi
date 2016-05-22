@@ -60,6 +60,8 @@ function Player:update(dt)
         self.reputation = math.max(self.reputation - 0.01, 0)
     end
 
+    self:checkReputation()
+
     self.vx = math.min(400, math.max(self.vx, -400))
     self.vy = math.min(400, math.max(self.vy, -400))
 
