@@ -57,7 +57,7 @@ function Player:update(dt)
 
     if love.keyboard.isDown(SPACE_KEY) and not self.pulse then
         self.pulse = true
-        self.reputation = math.max(self.reputation - 0.01, 0)
+        self.reputation = math.max(self.reputation - 0.001, 0)
     end
 
     self:checkReputation()
