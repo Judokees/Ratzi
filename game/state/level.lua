@@ -122,9 +122,13 @@ function Level:update(dt)
     end
     self.map:update(dt)
     self.markers[self.currentStep]:update(dt)
-    self.uiInfo.reputation = self.player.reputation
     Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
     Util:stackDebug(self.player:getDebug())
+    self.uiInfo.reputation = self.player.reputation
+    self.uiInfo.destX = self.steps[self.currentStep].position.x
+    self.uiInfo.destY = self.steps[self.currentStep].position.y
+    self.uiInfo.playerX = self.player.x
+    self.uiInfo.playerY = self.player.y
     UI:update(dt, self.uiInfo)
 end
 

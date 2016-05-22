@@ -14,10 +14,16 @@ function UI:load()
         height = 40
     })
     self.notification = nil
+    self.arrowImage = love.graphics.newImage("media/arrow.png")
 end
 
 function UI:update(dt, info)
     self.staminaBar:setValue(info.reputation)
+    self.destX = info.destX
+    self.destY = info.destY
+    self.playerX = info.playerX
+    self.playerY = info.playerY
+
     if self.notification then
         self.notification:update(dt)
     end
@@ -46,10 +52,20 @@ function UI:draw()
     love.graphics.push()
     love.graphics.translate(10, 10)
     self.staminaBar:draw()
+    love.graphics.translate(windowWidth - 150, 100)
+    self:drawArrow(self.destX, self.destY)
     love.graphics.pop()
     if self.notification then
         self.notification:draw()
     end
+end
+
+function UI:drawArrow(destx, desty)
+    local arrowWidth, arrowHeight = self.arrowImage:getDimensions()
+    local xOffset = arrowWidth / 2
+    local yOffset = arrowHeight / 2
+    local angle = math.atan2(desty - self.playerY, destx - self.playerX)
+    love.graphics.draw(self.arrowImage, 0, 0, angle, 1, 1, xOffset, yOffset)
 end
 
 return UI
