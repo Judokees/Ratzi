@@ -2,6 +2,7 @@ local bump = require 'libs.bump.bump'
 local GameState = require 'game.state.game_state'
 local Player = require 'game.world.character.player'
 local Fan = require 'game.world.character.fan'
+local Ratzi = require 'game.world.character.ratzi'
 local Map = require 'game.world.map'
 local Camera = require 'game.camera'
 local NewsPaper = require 'game.world.notification.newspaper'
@@ -19,6 +20,7 @@ function Level.create(id)
     setmetatable(self, Level)
     self.world = bump.newWorld()
     self.fans = {}
+    self.ratzis = {}
     self.map = Map.create(self.world)
     self.id = id
     return self
@@ -30,12 +32,23 @@ function Level:load()
     self.player = Player.create(self.world, spawn.x, spawn.y)
     self.player:load()
     local bounds = self.map:getBounds()
-    for i=1,300 do
+
+    -- load fans
+    for i=1, 300 do
         local npcNumber = math.floor(math.random(14))
         local fanPos = { x = math.floor(love.math.random() * bounds.width), y = math.floor(love.math.random() * bounds.height)}
         local fan = Fan.create(self.world, self.player, fanPos.x, fanPos.y, npcNumber)
         fan:load()
         table.insert(self.fans, fan)
+    end
+
+    -- load ratzis
+    for i=1, 300 do
+        local npcNumber = math.floor(math.random(8))
+        local ratziPos = { x = math.floor(love.math.random() * bounds.width), y = math.floor(love.math.random() * bounds.height)}
+        local ratzi = Ratzi.create(self.world, self.player, ratziPos.x, ratziPos.y, npcNumber)
+        ratzi:load()
+        table.insert(self.ratzis, ratzi)
     end
 end
 
@@ -47,6 +60,11 @@ function Level:pulse()
         for _, fan in ipairs(self.fans) do
             if fan:isWithinDistanceFromPlayer(self.player.pulseRadius) then
                 fan:beingPulsed()
+            end
+        end
+        for _, ratzi in ipairs(self.ratzis) do
+            if ratzi:isWithinDistanceFromPlayer(self.player.pulseRadius) then
+                ratzi:beingPulsed()
             end
         end
         self.player.pulse = false
@@ -61,6 +79,9 @@ function Level:update(dt)
     for _, fan in ipairs(self.fans) do
         fan:update(dt)
     end
+    for _, ratzi in ipairs(self.ratzis) do
+        ratzi:update(dt)
+    end
     Camera:focus({ x = self.player.x, y = self.player.y }, self.map:getBounds())
     Util:stackDebug(self.player:getDebug())
 end
@@ -71,6 +92,9 @@ function Level:draw()
     self.player:draw()
     for _, fan in ipairs(self.fans) do
         fan:draw()
+    end
+    for _, ratzi in ipairs(self.ratzis) do
+        ratzi:draw()
     end
     Camera:unset()
 end

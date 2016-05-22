@@ -1,8 +1,6 @@
 local Util = require 'util'
 local Character = {}
 
-local COLLISION_OFFSET = 4
-
 Character.__index = Character
 
 function Character.create(world, x, y)
@@ -17,6 +15,7 @@ function Character.create(world, x, y)
     self.frame = 1
     self.totalFrames = 4
     self.angle = 0
+    self.COLLISION_OFFSET = 4
 
     -- this is set by the classes that use character.lua
     self.path = ""
@@ -35,7 +34,11 @@ end
 function Character:load()
     self.images = self:loadImages()
     self.width, self.height = self.images[self.frame]:getDimensions()
-    self.world:add(self, self.x + COLLISION_OFFSET, self.y + COLLISION_OFFSET, self.width - COLLISION_OFFSET * 2, self.height - COLLISION_OFFSET * 2)
+    self.world:add(self, self.x + self.COLLISION_OFFSET,
+                   self.y + self.COLLISION_OFFSET,
+                   self.width - self.COLLISION_OFFSET * 2,
+                   self.height - self.COLLISION_OFFSET * 2
+                   )
 end
 
 function Character:loadImages()
@@ -82,8 +85,8 @@ function Character:draw()
     local image = self:getImageFromFrame()
     local xOffset = self.width / 2
     local yOffset = self.height / 2
-    local x = self.x + xOffset - COLLISION_OFFSET
-    local y = self.y + yOffset - COLLISION_OFFSET
+    local x = self.x + xOffset - self.COLLISION_OFFSET
+    local y = self.y + yOffset - self.COLLISION_OFFSET
 
     love.graphics.draw(image, x, y, self.angle, 1, 1, xOffset, yOffset)
 end
